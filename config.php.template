@@ -1,0 +1,17 @@
+<?php
+// --- DATABASE CONFIGURATIONS ---
+define('DB_HOSTNAME', 'localhost');
+define('DB_NAME', 'rstrip');
+define('DB_USERNAME', 'root');
+define('DB_PASSWORD', 'destructor');
+define('ENCODING', 'UTF8');
+define('DB_PREFIX', '');
+
+// --- SITE ADDRESS ---
+define('WWW', ''); // '' or 'www.'
+define('SITE_HOST', 'rstrip.local');
+
+// --- SESSION ---
+define('COOKIE_NAME', 'RST_SESSION_NUMBER');
+
+?>

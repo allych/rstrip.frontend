@@ -1,0 +1,15 @@
+php_value display_errors 1
+RewriteEngine on
+AddDefaultCharset utf-8
+Options -Indexes +FollowSymlinks
+
+RewriteBase /
+
+RewriteCond %{REQUEST_URI} !^/index.php
+
+RewriteCond %{REQUEST_URI} !^/css/
+RewriteCond %{REQUEST_URI} !^/img/
+RewriteCond %{REQUEST_URI} !^/js/
+RewriteCond %{REQUEST_URI} !^/favicon.ico
+
+RewriteRule .*             /index.php [L]
