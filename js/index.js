@@ -1,3 +1,8 @@
+function showError(name, message) {
+	$('form[name="' + name + '"] #error').show();
+	$('form[name="' + name + '"] #error').html( typeof message != 'undefined' ? message : 'Error in connection with server' );
+}
+
 function slider() {
 	if(typeof jQuery().nivoSlider == 'function') {
 		$('#slider').nivoSlider({

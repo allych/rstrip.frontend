@@ -1,3 +1,62 @@
+.file-input-wrapper {
+	padding: 2px 8px;
+	font-size: 12px;
+	color: #333333 !important;
+}
+
+.popup_form_footer {
+	margin: 0 -10px -10px -10px;
+	padding: 10px 13px;
+	text-align: right;
+	border-top: 1px solid #ddd;
+	background-color: #f5f5f5;
+}
+
+.popup_actions.empty {
+	padding: 13px 20px 13px 10px;
+}
+
+.leaflet-popup-content-wrapper {
+	padding: 0px;
+}
+
+.leaflet-container a.leaflet-popup-close-button {
+	padding: 12px 10px 0 0;
+}
+
+.popup_actions_footer {
+	padding: 10px 13px;
+	text-align: right;
+	border-top: 1px solid #ddd;
+	background-color: #f5f5f5;
+}
+.leaflet-popup-content {
+	margin: 0;
+}
+
+.popup_actions h6 {
+	padding: 0 10px;
+}
+
+
+.clear {
+	clear: both;
+}
+
+.popup_actions .poi_description {
+	height: 75px;
+	font-size: 11px;
+	padding: 0 10px 10px 10px;
+}
+
+.popup_actions .poi_description img {
+	max-height: 70px;
+	max-width: 70px;
+	float: right;
+	margin: 0 0 5px 5px;
+	box-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+}
+
 textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
 	font-size: 11px;
 	line-height: 14px;
@@ -42,7 +101,7 @@ form[name="poi_get_form"] {
 .popup_form {
 	width: 230px;
 	margin: 0;
-	padding: 0;
+	padding: 10px;
 }
 .popup_form label {
 	font-size: 11px;

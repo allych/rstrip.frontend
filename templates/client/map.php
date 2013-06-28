@@ -51,7 +51,7 @@
 		<script src="http://cdn.leafletjs.com/leaflet-0.4/leaflet.js"></script>
 		<script type="text/javascript">
 
-			var backend_host = 'http://backend.<?= SITE_HOST ?>:8080/';
+			var backend_host = 'http://<?= SITE_HOST ?>:8080/';
 			var latitude = <?= user::init()->get_session_param('map_latitude'); ?>;
 			var longitude = <?= user::init()->get_session_param('map_longitude'); ?>;
 			var zoom = <?= user::init()->get_session_param('map_zoom'); ?>;
@@ -60,7 +60,7 @@
 			
 			function htmlPopupActions() {
 				return $('<div>', {
-					class: 'popup_actions'
+					class: 'popup_actions empty'
 				})	.append($('<a>',{
 						href: 'javascript:void(0);',
 						title: 'Добавить POI'
@@ -77,15 +77,24 @@
 				return $('<div>', {
 					class: 'popup_actions',
 				})	.append($('<h6>').append(poi.name)
-				)	.append($('<a>',{
-						href: 'javascript:void(0);',
-						title: 'Удалить POI'
-					}).append('<img src="/img/icons/cross-script.png" />').bind('click', function(){DeletePOIForm(poi.id); return false;})
-				)
-					.append($('<a>',{
-						href: 'javascript:void(0);',
-						title: 'Редактировать POI'
-					}).append('<img src="/img/icons/pencil.png" />').bind('click', function(){EditPOIForm(poi.id); return false;})
+				)	.append($('<div>',{class: 'poi_description'}).append('<img src="'+poi.img+'" class="img-rounded" />'+poi.description)
+				)	.append($('<div>',{class: 'clear'})
+				)	.append($('<div>', {class: 'popup_actions_footer'})
+						.append($('<a>',{
+								href: 'javascript:void(0);',
+								title: 'Удалить POI'
+							}).append('<img src="/img/icons/cross-script.png" />').bind('click', function(){DeletePOIForm(poi.id); return false;})
+						)
+							.append($('<a>',{
+								href: 'javascript:void(0);',
+								title: 'Редактировать POI'
+							}).append('<img src="/img/icons/pencil.png" />').bind('click', function(){EditPOIForm(poi.id); return false;})
+						)
+							.append($('<a>',{
+								href: 'javascript:void(0);',
+								title: 'Загрузить изображение'
+							}).append('<img src="/img/icons/image.png" />').bind('click', function(){LoadImagePOIForm(poi.id); return false;})
+						)
 				).get(0);
 			}
 
@@ -108,17 +117,23 @@
 						type: 'text',
 						name: 'name'
 					})
-				)	.append($('<label>').append('Название*')
+				)	.append($('<label>').append('Описание')
 				)	.append($('<textarea>',{
 						name: 'description'
 					})
-				)	.append($('<button>',{
-						class: 'btn btn-mini',
-						type: 'submit'
-					}).append('Сохранить').bind('click', function(){AddPOI(); return false;})
-				)	.append($('<div>',{
-						id: 'loading'
-					})
+				)	.append($('<div>',{class: 'popup_form_footer'})
+						.append($('<button>',{
+								class: 'btn btn-mini btn-primary',
+								type: 'submit'
+							}).append('Сохранить').bind('click', function(){AddPOI(); return false;})
+						)	.append($('<button>',{
+								class: 'btn btn-mini',
+								type: 'button'
+							}).append('Отмена').bind('click', function(){AddPOICancel(); return false;})
+						)	.append($('<div>',{
+								id: 'loading'
+							})
+						)
 				).get(0);
 			}
 
@@ -147,21 +162,24 @@
 						name: 'name',
 						value: poi.name
 					})
-				)	.append($('<label>').append('Название*')
+				)	.append($('<label>').append('Описание')
 				)	.append($('<textarea>',{
+						rows: 6,
 						name: 'description'
 					}).append(poi.description)
-				)	.append($('<button>',{
-						class: 'btn btn-mini',
-						type: 'submit'
-					}).append('Сохранить').bind('click', function(){EditPOI(); return false;})
-				)	.append($('<button>',{
-						class: 'btn btn-mini',
-						type: 'button'
-					}).append('Отмена').bind('click', function(){EditPOICancel(poi.id); return false;})
-				)	.append($('<div>',{
-						id: 'loading'
-					})
+				)	.append($('<div>',{class: 'popup_form_footer'})
+							.append($('<button>',{
+								class: 'btn btn-mini btn-primary',
+								type: 'submit'
+							}).append('Сохранить').bind('click', function(){EditPOI(); return false;})
+						)	.append($('<button>',{
+								class: 'btn btn-mini',
+								type: 'button'
+							}).append('Отмена').bind('click', function(){EditPOICancel(poi.id); return false;})
+						)	.append($('<div>',{
+								id: 'loading'
+							})
+					)
 				).get(0);
 			}
 
@@ -169,22 +187,66 @@
 				return $('<form>', {
 					class: 'popup_form',
 					name: 'poi_delete_form'
-				})	.append($('<label>').append('Вы уверены, что хотите удалить POI?')
+				})	.append($('<p>').append('Вы уверены, что хотите удалить POI <strong>'+poi.name+'</strong>?')
 				)	.append($('<input>',{
 						type: 'hidden',
 						name: 'id',
 						value: poi.id
 					})
-				)	.append($('<button>',{
-						class: 'btn btn-mini',
-						type: 'submit'
-					}).append('Удалить').bind('click', function(){DeletePOI(); return false;})
-				)	.append($('<button>',{
-						class: 'btn btn-mini',
-						type: 'button'
-					}).append('Отмена').bind('click', function(){DeletePOICancel(poi.id); return false;})
+				)	.append($('<div>',{class: 'popup_form_footer'})
+							.append($('<button>',{
+								class: 'btn btn-mini btn-primary',
+								type: 'submit'
+							}).append('Удалить').bind('click', function(){DeletePOI(); return false;})
+						)	.append($('<button>',{
+								class: 'btn btn-mini',
+								type: 'button'
+							}).append('Отмена').bind('click', function(){DeletePOICancel(poi.id); return false;})
+					)
 				)	.append($('<div>',{
 						id: 'loading'
+					})
+				).get(0);
+			}
+
+			function htmlLoadImagePOIForm(poi) {
+				return $('<form>', {
+					action: '/map/load_image_poi',
+					class: 'popup_form',
+					method: 'post',
+					name: 'poi_load_image_form',
+					enctype: "multipart/form-data"
+				})	.append($('<input>',{
+						type: 'hidden',
+						name: 'id',
+						value: poi.id
+					})
+				)	.append($('<p>').append('Загрузка изображения для POI <strong>'+poi.name+'</strong>')
+				)	.append($('<div>',{
+						class: 'alert alert-error',
+						id: 'error',
+						style: 'display: none'
+					})
+				)	.append($('<p>').append($('<input>',{
+						type: 'file',
+						title: 'Выберите файл',
+						name: 'img'
+					}))
+				)	.append($('<div>',{class: 'popup_form_footer'})
+							.append($('<button>',{
+								class: 'btn btn-mini btn-primary',
+								type: 'submit'
+							}).append('Загрузить').bind('click', function(){LoadImagePOI(); return false;})
+						)	.append($('<button>',{
+								class: 'btn btn-mini',
+								type: 'button'
+							}).append('Отмена').bind('click', function(){LoadImagePOICancel(poi.id); return false;})
+					)
+				)	.append($('<div>',{
+						id: 'loading'
+					})
+				)	.append($('<div>',{
+						id: 'preview'
 					})
 				).get(0);
 			}
