@@ -10,7 +10,8 @@ define('DB_PREFIX', '');
 // --- SITE ADDRESS ---
 define('WWW', ''); // '' or 'www.'
 define('SITE_HOST', 'rstrip.local');
-
+define('BACKEND_HOST', 'http://' . SITE_HOST . ':8080/');
+      
 // --- SESSION ---
 define('COOKIE_NAME', 'RST_SESSION_NUMBER');
 

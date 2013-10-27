@@ -51,7 +51,7 @@
 		<script src="http://cdn.leafletjs.com/leaflet-0.4/leaflet.js"></script>
 		<script type="text/javascript">
 
-			var backend_host = 'http://<?= SITE_HOST ?>:8080/';
+			var backend_host = '<?= BACKEND_HOST ?>';
 			var latitude = <?= user::init()->get_session_param('map_latitude'); ?>;
 			var longitude = <?= user::init()->get_session_param('map_longitude'); ?>;
 			var zoom = <?= user::init()->get_session_param('map_zoom'); ?>;
